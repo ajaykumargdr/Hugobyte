@@ -1,0 +1,52 @@
+1) BlockChain:-
+    
+    - In its simplest form, a blockchain is a distributed list of transactions that is constantly updated and reviewed. Also known as distributed ledger technology (DLT), it can be programmed to record and track anything of value across a network spread around multiple locations and entities. This creates a sort of worldwide spider web of connected computers
+
+2) Smart Contracts 
+3) How Smart Contracts works
+
+    * (https://www.ibm.com/topics/smart-contracts)
+
+    * https://www.investopedia.com/terms/s/smart-contracts.asp#:~:text=Smart%20contracts%20are%20code%20written,parties%20to%20trust%20each%20other.
+
+4) Consensus mechanism
+
+    What is Nonce:-
+    --------------- 
+        https://dataconomy.com/2022/12/15/blockchain-nonce-explained/        
+
+    https://www.shiksha.com/online-courses/articles/consensus-mechanisms-in-blockchain/#intro
+
+        POI: https://www.geeksforgeeks.org/proof-of-importance-poi-in-blockchain/
+        POC: https://www.geeksforgeeks.org/proof-of-capacity/
+        POA: https://www.geeksforgeeks.org/proof-of-authority-consensus/?ref=ml_lbp
+
+in these mecanisms how hacker node is found?
+why smart contracts when there is consensus
+
+[D]smart contracts
+
+****** types of blockchain
+etherium network and EVM
+
+example of nonce
+pub and pri key encryption **
+metamask	// create flowchart
+BST consensus
+ibc
+icon
+initial stage of blockchains
+sharding
+nonce
+in which consensus is the Etherium works
+token vs coin
+
+rustlinks
+// git ignore file // rust
+// 51% attack
+// who creates the pub and pri key in the case of non digi wallet
+
+
+
+mint scan
+ibc network

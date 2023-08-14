@@ -1,0 +1,9 @@
+this is the file 
+and the pattern is 
+pattern which has 
+the wor pattern
+but the firt line 
+does not has 
+the word pattern
+it should have some pattern
+in this file.txt file
