@@ -23,8 +23,12 @@ fn main() {
     
     let cons_list = List::Cons(1, Box::new(   List::Cons(2, Box::new(Nil))  ));
     
-    let cons_list2 = Cons(2, Box::new( Cons(4, Box::new(Cons(6, Box::new(Nil)) ) ) ) );
+    // let cons_list2 = Cons(21, Box::new( Cons(4, Box::new(Cons(6, Box::new(Nil)) ) ) ) );
 
+    let cons_list2 = Cons(21, Box::new( Cons(4, Box::new(Cons(6, Box::new(Nil)) ) ) ) );
+    
+    // let cons_list3 = Cons(22, Box::new( Cons(5, Box::new) ) );
+    
     println!("{:#?}", cons_list);
     println!("{:#?}", cons_list2);
 
