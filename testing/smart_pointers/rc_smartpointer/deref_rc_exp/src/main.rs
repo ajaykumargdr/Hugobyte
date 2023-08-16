@@ -41,26 +41,31 @@ fn _check_rc_mutate(){
 
 #[derive(Debug)]
 enum E1{
-    Tuple(i32, i32, i32)    
+    Tuple(i32, i32, i32),
+    ASD(S1)
 }
 
 fn main(){
 
-    _check_rc_mutate();
+    // _check_rc_mutate();
 
-    let x = Rc::new(S1{
-        val1: 5
-    });
+    let x: Rc<E1> = Rc::new(E1::ASD(S1{
+        val1: 20
+    }));
 
     let y = Rc::new(
         E1::Tuple(5, 10, 15)
     );
 
     
-    println!("{:?} {:?}",
-        x.val1, 
-        y //.0          // uncommenting this gives error
-    );
+    // println!("{:?} {:?}",
+    //     x.val1, 
+    //     y.0          // uncommenting this gives error
+    // );
 
+    match x.as_ref() {
+        E1::Tuple(x, y, a) => println!("{x}"),
+        E1::ASD(s) => println!("{:?}", s.val1),
+    }
 
 }
