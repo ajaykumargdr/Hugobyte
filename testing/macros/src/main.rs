@@ -1,7 +1,7 @@
+// declarative macros
 ////////////////////////////////////////////////////
 
 #[macro_export]
-// declarative macros
 macro_rules! vec_ { // macro name
     
     ( $( $x:expr ),* ) => {
