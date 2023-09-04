@@ -7,13 +7,11 @@ edition = "2021"
 
 [dependencies]
 # actions = "0.2.0"
-chesterfield = "0.0.1"
 # couchdb = "0.6.0"
 # futures = "0.3.28"
 # prelude = "0.2.1"
+# reqwest = "0.11"
+# tokio = { version="1.32.0", features = ["full"]}
 
-reqwest = "0.11"
+chesterfield = "0.0.1"
 serde = "1.0"
-serde_json = "1.0"
-
-tokio = { version="1.32.0", features = ["full"]}
