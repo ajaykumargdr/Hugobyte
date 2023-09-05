@@ -198,3 +198,5 @@ fn main() -> Result<(), Error> {
     }
 
 }
+
+// docker build -t postgres-rust-cli .
