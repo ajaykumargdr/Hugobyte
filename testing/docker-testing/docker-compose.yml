@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  # rust-app:
+    # container_name: rust-app
+    # build:
+      # context: .
+      # dockerfile: Dockerfile
+
+# ----------------------
+
+  dev:
+    image: "rust:latest"
+#------------------------
+
+
+    volumes:
+      - .:/usr/src/app
+    # ports:
+      # - "8080:8080"  # Adjust the port as needed
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: dockerian
+      POSTGRES_PASSWORD: dockerian
+      POSTGRES_DB: rustian
+    ports:
+      - "5432:5432"  # Adjust the port as needed
