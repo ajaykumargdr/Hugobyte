@@ -45,5 +45,12 @@ fn get_unused_port() -> Result<u16, std::io::Error> {
 
 fn main() {
 
+    println!("{:?}", get_unused_port());
+    
+    let x = CouchDB::new("hugobyte".into(), "hugobyte".into()).await.unwrap();
+
+    println!("{:?}", x);
+
+    x.container.delete().await.unwrap();
     
 }
