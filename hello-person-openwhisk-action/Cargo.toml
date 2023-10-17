@@ -1,0 +1,16 @@
+[package]
+name = "hello-person-openwhisk-action"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "hello_person_openwhisk_action"
+path = "src/lib.rs"
+
+[package.metadata.docs.rs]
+doctest = false
+
+[dependencies]
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"

@@ -1,8 +1,11 @@
 [package]
-name = "generic_types"
+name = "macro_default_values"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+serde = {version="1.0", feature="derive"}
+serde_derive = "1.0"
+serde_json = "1.0"

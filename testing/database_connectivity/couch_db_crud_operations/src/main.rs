@@ -29,6 +29,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 use chesterfield::sync::Client;
 use chesterfield::GetResponse;
+use serde_json::Value;
 
 use serde::{Deserialize, Serialize};
 
@@ -144,38 +145,109 @@ pub fn delete_document(client: &mut Client, db_name: &str, doc_id: &str) {
 
 fn main() {
     let mut client = get_connection_client();
-    const DB_NAME: &'static str = "test_db";
+    
+    // Inserting data
+    ///////////////////////////////////////////////////////////////////////
+    // let db = client
+    //             .database("event_registration_db")
+    //             .unwrap()
+    //             .create()  
+                // .expect("not able to create test database");
+ 
+    let json_value = r#"{"name": "icon-eth-notification", "trigger": "0a36fd24-84ac-420e-9187-912929c782ea"}"#;
 
-    /////////////////////////// CREATE database //////////////////////////////
+    let data:Value = serde_json::from_str(json_value).unwrap();
 
-    create_database_if_not_exist(&mut client, DB_NAME);
+    client
+        .database("event_registration_db")
+        .unwrap()
+        .insert(&data, String::from("0a36fd24-84ac-420e-9187-912929c782ea"))
+        .send()
+        .expect("not able to create document");
 
-    //////////////////////////// CREATE document //////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
-    let data = TestData {
-        name: String::from("Rustian"),
-        data: 1,
-    };
+    ////////////////////////////////////////////////////////////////////////////////
 
-    const DOC_ID: &'static str = "my-couch-db-id";
+    let db = client
+        .database("event_registration_db").unwrap();
 
-    create_document(&mut client, DB_NAME, data, DOC_ID);
+    let doc_get_response: Result<GetResponse<Value>, _> = db
+            .get("0a36fd24-84ac-420e-9187-912929c782ea")
+            .send();
 
-    ///////////////////////////// READ document //////////////////////////////////
+    let data:Value = doc_get_response.unwrap()
+                            .into_inner()
+                            .unwrap()
+                            .get("name")
+                            .unwrap()
+                            .clone();
 
-    let doc = get_document(&mut client, DB_NAME, DOC_ID);
-    println!("{:?}", doc);
+    let action_name:String =  serde_json::from_value(data).unwrap();
 
-    ///////////////////////////// UPDATE document ////////////////////////////////
 
-    let updated_data = TestData {
-        name: String::from("Rustian 2.0"),
-        data: 2,
-    };
+    println!("{:?}", action_name);
 
-    update_document(&mut client, DB_NAME, DOC_ID, updated_data);
+    delete_document(&mut client, "event_registration_db", "0a36fd24-84ac-420e-9187-912929c782ea");
 
-    ////////////////////////////// DELETE document ////////////////////////////////
 
-    delete_document(&mut client, DB_NAME, DOC_ID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // const DB_NAME: &'static str = "test_db";
+
+    // /////////////////////////// CREATE database //////////////////////////////
+
+    // create_database_if_not_exist(&mut client, DB_NAME);
+
+    // //////////////////////////// CREATE document //////////////////////////////
+
+    // let data = TestData {
+    //     name: String::from("Rustian"),
+    //     data: 1,
+    // };
+
+    // const DOC_ID: &'static str = "my-couch-db-id";
+
+    // create_document(&mut client, DB_NAME, data, DOC_ID);
+
+    // ///////////////////////////// READ document //////////////////////////////////
+
+    // let doc = get_document(&mut client, DB_NAME, DOC_ID);
+    // println!("{:?}", doc);
+
+    // ///////////////////////////// UPDATE document ////////////////////////////////
+
+    // let updated_data = TestData {
+    //     name: String::from("Rustian 2.0"),
+    //     data: 2,
+    // };
+
+    // update_document(&mut client, DB_NAME, DOC_ID, updated_data);
+
+    // ////////////////////////////// DELETE document ////////////////////////////////
+
+    // delete_document(&mut client, DB_NAME, DOC_ID);
 }
