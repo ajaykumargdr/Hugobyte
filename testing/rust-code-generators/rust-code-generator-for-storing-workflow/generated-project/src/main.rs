@@ -11,7 +11,9 @@ struct WorkFlow(Vec<Flow>);
 
 impl WorkFlow {
     pub fn add_flow(&mut self, flow: Flow) {
-        self.0.push(Flow { ..flow });
+        self.0.push(Flow {
+            ..flow
+        });
     }
 }
 
@@ -25,16 +27,16 @@ fn main() {
 }
 
 fn load_flows(workflow: &mut WorkFlow) {
-    workflow.add_flow(Flow {
-        field_1: "flow-1".to_string(),
-        field_2: 1,
-        field_3: 0.1,
-        field_4: true,
-    });
-    workflow.add_flow(Flow {
-        field_1: "flow-2".to_string(),
-        field_2: 2,
-        field_3: 0.2,
-        field_4: false,
-    });
+	workflow.add_flow(Flow {
+                field_1: "flow-1".to_string(),
+                field_2: 1,
+                field_3: 0.1,
+                field_4: true,
+            });
+	workflow.add_flow(Flow {
+                field_1: "flow-2".to_string(),
+                field_2: 2,
+                field_3: 0.2,
+                field_4: false,
+            });
 }

@@ -15,7 +15,7 @@ pub fn make_answer(_item:TokenStream)-> TokenStream{
 pub fn make_another(item:TokenStream) -> TokenStream{
 
     "fn answer2() -> &'static str { 
-        \"another macro created function\" 
+        \"another macro created function\"
     } ".parse().unwrap()
 
 }

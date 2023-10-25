@@ -274,8 +274,6 @@ pub mod mid{
             depend_on: Value,
             eval: &mut Evaluator,
         ) -> anyhow::Result<NoneType> {
-            // We modify extra (which we know is a Store) and add the JSON of the
-            // value the user gave.
             eval.extra.unwrap().downcast_ref::<WorkFlow>().unwrap().add(
                 hook_type.to_json()?.replace("\"", ""),
                 flow_type.to_json()?.replace("\"", ""),
@@ -394,11 +392,11 @@ fn main() {
 
     // gen::function_call();
     // gen::using_rust_types_in_starlark();
-    gen::say_hello();
+    // gen::say_hello();
 
-    // test_function();
+    test_function();
 }
-/*
+
 fn test_function() {
     let content: String = std::fs::read_to_string("test.star").unwrap();
 
@@ -422,4 +420,3 @@ fn test_function() {
 
     println!("{:?}", res);
 }
-*/
