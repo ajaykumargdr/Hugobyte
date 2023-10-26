@@ -1,22 +1,29 @@
-use std::borrow::BorrowMut;
-use std::{collections::HashMap, io::ErrorKind};
 use std::cell::RefCell;
+use std::{collections::HashMap, io::ErrorKind};
 
 #[derive(Debug, Clone)]
 pub struct Task {
-    task_name: String,
-    depends: Option<Vec<String>>, // indices of depending nodes
+    kind: String,
+    action_name: String,
+    input: HashMap<String, String>,
+    attributes: HashMap<String, String>,
+    deps: HashMap<String, HashMap<String, String>>,
 }
 
 impl Task {
-    pub fn new(task_name: &str, depends: Vec<String>) -> Self {
+    pub fn new(
+        kind: &str,
+        action_name: &str,
+        input: HashMap<String, String>,
+        attributes: HashMap<String, String>,
+        deps: HashMap<String, HashMap<String, String>>,
+    ) -> Self {
         Task {
-            task_name: task_name.to_string(),
-            depends: if depends.len() != 0 {
-                Some(depends)
-            } else {
-                None
-            },
+            kind: kind.to_string(),
+            action_name: action_name.to_string(),
+            input,
+            attributes,
+            deps,
         }
     }
 }
@@ -24,36 +31,51 @@ impl Task {
 #[derive(Debug, starlark::any::ProvidesStaticType, Default)]
 pub struct Workflow(RefCell<HashMap<String, Task>>);
 
-
 impl Workflow {
-
     pub fn add_nodes(&self, node: Task) -> Result<bool, ErrorKind> {
-
-        if let Some(_) = self
-            .0
-            .borrow_mut()
-            .insert(node.task_name.clone(), node)
-        {
+        if let Some(_) = self.0.borrow_mut().insert(node.action_name.clone(), node) {
             Err(ErrorKind::AlreadyExists)
         } else {
             Ok(true)
         }
     }
-}
 
-#[test]
-fn creating_workflow() {
-    let task1 = Task::new("task-1", vec![]);
-    let task2 = Task::new("task-2", vec![String::from("task-1")]);
-    let task3 = Task::new("task-3", vec![String::from("task-1")]);
-    let task4 = Task::new(
-        "task-4",
-        vec![String::from("task-2"), String::from("task-3")],
-    );
+    fn get_dependencies(&self, task_name: &str) -> Option<Vec<String>> {
+        let mut deps = Vec::<String>::new();
 
-    let mut wf = Workflow::default();
-    wf.add_nodes(task1).unwrap();
-    wf.add_nodes(task2).unwrap();
-    wf.add_nodes(task3).unwrap();
-    wf.add_nodes(task4).unwrap();
+        for d in self.0.borrow().get(task_name).unwrap().deps.iter() {
+            deps.push(d.0.clone());
+        }
+
+        Some(deps)
+    }
+
+    fn dfs(&self, task_name: &str, visited: &mut HashMap<String, bool>, flow: &mut Vec<String>) {
+        visited.insert(String::from(task_name), true);
+
+        for d in self.get_dependencies(task_name).unwrap().iter() {
+            if !visited[d] {
+                self.dfs(d, visited, flow);
+            }
+        }
+
+        flow.push(String::from(task_name));
+    }
+
+    pub fn get_flow(&self) -> Vec<String> {
+        let mut visited = HashMap::<String, bool>::new();
+        let mut flow = Vec::<String>::new();
+
+        for t in self.0.borrow().iter() {
+            visited.insert(String::from(t.0), false);
+        }
+
+        for t in self.0.borrow().iter() {
+            if !visited[t.0] {
+                self.dfs(t.0, &mut visited, &mut flow)
+            }
+        }
+
+        flow
+    }
 }

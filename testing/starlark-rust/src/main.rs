@@ -11,7 +11,7 @@ use starlark::{starlark_type, starlark_simple_value, starlark_module};
 use std::cell::RefCell;
 use std::fmt::{self, Display};
 use allocative::Allocative;
-
+use serde_json::{Serialize, Deserialize};
 
 mod gen;
 use gen::*;
@@ -264,7 +264,7 @@ pub mod mid{
             })
         }
     }
-
+/* uncomment this to test `using function in starlark`
     #[starlark_module]
     pub fn starlark_workflow(builder: &mut GlobalsBuilder) {
         fn create_flow(
@@ -310,11 +310,11 @@ pub mod mid{
     println!("{:#?}", store.0.borrow());
 
     }
-
+*/ 
     //////////////////////////////////////////////
         
     // Define complex numbers
-    #[derive(Debug, PartialEq, Eq, ProvidesStaticType, NoSerialize, Allocative)]
+    #[derive(Debug, PartialEq, Eq, ProvidesStaticType, NoSerialize, Allocative, Serialize, Deserialize)]
     struct Complex {
         real: i32,
         imaginary: i32,
@@ -338,7 +338,7 @@ pub mod mid{
 *////////////////////////////////////////////////////////////////
 
     impl<'v> StarlarkValue<'v> for Complex {
-        starlark_type!("complex");
+        starlark_type!("Complex");
 
         // How we add them
         fn add(&self, rhs: Value<'v>, heap: &'v Heap)
@@ -354,24 +354,46 @@ pub mod mid{
         }
     }
 
+    #[starlark_module]
+    pub fn starlark_workflow(builder: &mut GlobalsBuilder) {
+        fn create_complex() -> anyhow::Result<Complex> {
+            Ok(
+                Complex { real: 5, imaginary: 5 }
+            )
+        }
+
+        fn create_complex_2(cmplx: Value) -> anyhow::Result<Complex> {
+
+            let input:Complex = serde_json::from_str(&cmplx.to_json()?).unwrap();
+ 
+
+
+            Ok(
+                input
+            )
+        }
+
+    }    
+
     pub fn using_rust_types_in_starlark(){
         let content: String = std::fs::read_to_string("using_rust_types.star").unwrap();
 
         let ast = AstModule::parse("using_rust_types.star", content.to_owned(), &Dialect::Standard).unwrap();
-        let globals = Globals::standard();
+        let globals = GlobalsBuilder::new().with(starlark_workflow).build();
         let module = Module::new();
         // We inject some complex numbers into the module before we start.
-        let a = module.heap().alloc(Complex {real: 1, imaginary: 8});
+        // let a = module.heap().alloc(Complex {real: 1, imaginary: 8});
 
-        module.set("a", a);
+        // module.set("a", a);
 
-        let b = module.heap().alloc(Complex {real: 4, imaginary: 2});
+        // let b = module.heap().alloc(Complex {real: 4, imaginary: 2});
 
-        module.set("b", b);
+        // module.set("b", b);
 
         let mut eval = Evaluator::new(&module);
         let res = eval.eval_module(ast, &globals).unwrap();
         // assert_eq!(res.unpack_str(), Some("5 + 10i"));
+
         println!("{:?}", res );
     }
 }
@@ -391,10 +413,10 @@ fn main() {
     // gen::say_hello();
 
     // gen::function_call();
-    // gen::using_rust_types_in_starlark();
+    mid::using_rust_types_in_starlark();
     // gen::say_hello();
 
-    test_function();
+    // test_function();
 }
 
 fn test_function() {

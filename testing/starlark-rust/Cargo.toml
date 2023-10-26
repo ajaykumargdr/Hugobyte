@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 allocative = "0.3.0"
 anyhow = "1.0.75"
-starlark = "0.9.0"
+serde_json = {version = "1.0.107"}
+starlark = "0.10.0"
