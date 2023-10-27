@@ -1,5 +1,5 @@
 [package]
-name = "dag_structure"
+name = "code-generator-poc"
 version = "0.1.0"
 edition = "2021"
 

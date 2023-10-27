@@ -1,4 +1,3 @@
-/*
 mod example1 {
 
     use types_macro::*;
@@ -37,25 +36,26 @@ mod example2 {
     }
 }
 
-*/
 mod example3 {
 
     // to convert literals into identifiers
-    // use paste::paste;
+    use paste::paste;
 
     // creating macro
     macro_rules! make_struct {
-        ($name:ident, [$($field_name:ident: $field_type:ident),*]) => {
+        ($name:literal, [$(($field_name:literal: $field_type:literal)),*]) => {
+
             // converting literals into identifiers
-                struct $name {
-                    $( $field_name: $field_type, )*
+            paste!{
+                struct [<$name>] {
+                    $( [<$field_name>]: [<$field_type>], )*
                 }
+            }
         };
     }
 
     // invoking the macro
-    // make_struct!("StakingPayoutInput", ["url": "String", "owner_key": "String", "address": "String", "era": "u32"]);
-    make_struct!(StakingPayoutInput, [url: String, owner_key: String, address: String, era: u32]);
+    make_struct!("StakingPayoutInput", [("url": "String"), ("owner_key": "String"), ("address": "String"), ("era": "u32")]);
 
     #[test]
     fn procedural_approach() {
