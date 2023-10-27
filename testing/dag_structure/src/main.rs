@@ -7,7 +7,9 @@ use starlark::values::{none::NoneType, Value};
 use std::collections::HashMap;
 
 mod workflow;
+
 use workflow::*;
+// use generator::*;
 
 #[starlark_module]
 pub fn starlark_workflow(builder: &mut GlobalsBuilder) {
@@ -36,7 +38,7 @@ pub fn starlark_workflow(builder: &mut GlobalsBuilder) {
     }
 }
 
-pub fn starlark_create_workflow(store: &mut Workflow, config_file: &str) {
+pub fn create_workflow(store: &mut Workflow, config_file: &str) {
     let content: String = std::fs::read_to_string(config_file).unwrap();
 
     let ast = AstModule::parse(config_file, content.to_owned(), &Dialect::Standard).unwrap();
@@ -51,17 +53,24 @@ pub fn starlark_create_workflow(store: &mut Workflow, config_file: &str) {
     }
 }
 
-fn main() {}
+fn main() {
+    let mut workflow = Workflow::default();
+
+    create_workflow(&mut workflow, "example.star");
+
+    workflow.generate();
+
+}
 
 #[test]
 fn get_flow_of_workflow_pass() {
     let mut store = Workflow::default();
-    starlark_create_workflow(&mut store, "example.star");
+    create_workflow(&mut store, "example.star");
 
-    let flow_1 = vec!["action-1", "action-3", "action-5", "action-2", "action-4"];
-    let flow_2 = vec!["action-1", "action-5", "action-2", "action-3", "action-4"];
-    let flow_3 = vec!["action-5", "action-1", "action-2", "action-3", "action-4"];
-    let flow_4 = vec!["action-5", "action-1", "action-3", "action-2", "action-4"];
+    let flow_1 = vec!["Action1", "Action3", "Action5", "Action2", "Action4"];
+    let flow_2 = vec!["Action1", "Action5", "Action2", "Action3", "Action4"];
+    let flow_3 = vec!["Action5", "Action1", "Action2", "Action3", "Action4"];
+    let flow_4 = vec!["Action5", "Action1", "Action3", "Action2", "Action4"];
 
     let possibilities = [flow_1, flow_2, flow_3, flow_4];
 
@@ -77,3 +86,6 @@ fn get_flow_of_workflow_pass() {
 
     assert!(pass);
 }
+
+
+//////////////////////////////////////////////

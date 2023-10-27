@@ -1,6 +1,6 @@
 task(
     kind = "openwhisk",
-    action_name = "action-1",
+    action_name = "Action1",
     input = {
         "url": "String",
         "owner_key":"String",
@@ -16,7 +16,7 @@ task(
 
 task(
     kind = "openwhisk",
-    action_name = "action-2",
+    action_name = "Action2",
     input = {
         "url": "String",
         "owner_key":"String",
@@ -27,17 +27,17 @@ task(
         "operation" : "stakingpayout"
     },
     deps ={
-        "action-1" : {
+        "Action1" : {
             "input" : "t1-field"
         },
-        "action-5" : {
+        "Action5" : {
         }
     }
 )
 
 task(
     kind = "openwhisk",
-    action_name = "action-3",
+    action_name = "Action3",
     input = {
         "url": "String",
         "owner_key":"String",
@@ -48,7 +48,7 @@ task(
         "operation" : "stakingpayout"
     },
     deps ={
-        "action-1" : {
+        "Action1" : {
             "input" : "t1-field"
         },
     }
@@ -56,7 +56,7 @@ task(
 
 task(
     kind = "openwhisk",
-    action_name = "action-4",
+    action_name = "Action4",
     input = {
         "url": "String",
         "owner_key":"String",
@@ -67,10 +67,10 @@ task(
         "operation" : "stakingpayout"
     },
     deps ={
-        "action-2" : {
+        "Action2" : {
             "input" : "t2-field"
         },
-        "action-3" : {
+        "Action3" : {
             "input" : "t3-field"
         }
     }
@@ -78,7 +78,7 @@ task(
 
 task(
     kind = "openwhisk",
-    action_name = "action-5",
+    action_name = "Action5",
     input = {
         "url": "String",
         "owner_key":"String",

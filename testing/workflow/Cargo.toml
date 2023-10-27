@@ -1,13 +1,9 @@
 [package]
-name = "dag_structure"
+name = "workflow"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-allocative = "0.3.1"
-anyhow = "1.0.75"
-serde_json = "1.0.107"
-starlark = "0.10.0"
-serde = { version = "1.0", features = ["derive"] }
+paste = "1.0.14"
