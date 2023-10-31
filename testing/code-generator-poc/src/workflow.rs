@@ -102,6 +102,31 @@ impl Workflow {
         input
     }
 
+    pub fn get_common_inputs(&self) -> Vec<(String, String)>{   
+        
+        let mut common = Vec::<(String, String)>::new();
+
+        // HashMap<String, Task
+        for (_, task) in self.0.borrow().iter(){
+
+            let mut depend = Vec::<String>::new();
+
+            for (_, fields) in task.deps.iter(){
+                for k in fields.keys(){
+                    depend.push(String::from(k));
+                }
+            }
+
+            for (field, ty) in task.input.iter(){
+                if let Err(_) =  depend.binary_search(field){
+                    common.push((String::from(field), String::from(ty)));
+                };
+            }
+        }
+
+        common
+    } 
+
     // Function to generate the code for the main.rs file
     fn generate_main_file_code(&self) -> String {
         let mut main_file = format!(
