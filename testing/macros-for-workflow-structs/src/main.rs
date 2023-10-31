@@ -1,3 +1,4 @@
+/*
 mod example1 {
 
     use types_macro::*;
@@ -14,16 +15,16 @@ mod example1 {
         };
     }
 }
-
+*/
 mod example2 {
     macro_rules! make_struct {
-        ($x:ident, $($element: ident: $ty: ty),*) => {
+        ($x:ident, $( $visibality:vis $element: ident: $ty: ty),*) => {
             #[derive(Debug)]
-            struct $x { $($element: $ty),* }
+            struct $x { $($visibality  $element: $ty),* }
         }
     }
 
-    make_struct!(StakingPayoutInput, url: String, owner_key: String, address: String, era: u32);
+    make_struct!(StakingPayoutInput, pub url: String, owner_key: String, pub address: String, era: u32);
 
     #[test]
     fn declarative_approach() {
@@ -33,9 +34,11 @@ mod example2 {
             address: "address".to_string(),
             era: 1,
         };
+
+        println!("{:?}", _spi.url);
     }
 }
-
+/*
 mod example3 {
 
     // to convert literals into identifiers
@@ -67,5 +70,6 @@ mod example3 {
         };
     }
 }
+*/
 
 fn main() {}
