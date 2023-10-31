@@ -9,19 +9,19 @@ macro_rules! make_struct {
 }
 
 
-make_struct!(Action4Input, [address:String,url:String,owner_key:String,era:u32]);
+make_struct!(Action4Input, [era:u32,url:String,owner_key:String,address:String]);
 make_struct!(Action4, [action_name: String, pub input: Action4Input, pub output: Value]);
 
-make_struct!(Action3Input, [era:u32,owner_key:String,url:String,address:String]);
-make_struct!(Action3, [action_name: String, pub input: Action3Input, pub output: Value]);
-
-make_struct!(Action2Input, [owner_key:String,era:u32,url:String,address:String]);
+make_struct!(Action2Input, [url:String,era:u32,owner_key:String,address:String]);
 make_struct!(Action2, [action_name: String, pub input: Action2Input, pub output: Value]);
 
-make_struct!(Action1Input, [owner_key:String,address:String,url:String,era:u32]);
+make_struct!(Action3Input, [url:String,era:u32,address:String,owner_key:String]);
+make_struct!(Action3, [action_name: String, pub input: Action3Input, pub output: Value]);
+
+make_struct!(Action1Input, [url:String,owner_key:String,address:String,era:u32]);
 make_struct!(Action1, [action_name: String, pub input: Action1Input, pub output: Value]);
 
-make_struct!(Action5Input, [url:String,address:String,owner_key:String,era:u32]);
+make_struct!(Action5Input, [owner_key:String,url:String,era:u32,address:String]);
 make_struct!(Action5, [action_name: String, pub input: Action5Input, pub output: Value]);
 
 

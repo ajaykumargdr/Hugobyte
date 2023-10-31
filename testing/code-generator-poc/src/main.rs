@@ -58,7 +58,9 @@ fn main() {
 
     create_workflow(&mut workflow, "example.star");
 
-    workflow.generate();
+    // workflow.generate();
+
+    println!("{:?}", workflow.get_common_inputs() );
 
 }
 
