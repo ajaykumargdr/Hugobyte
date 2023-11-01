@@ -1,8 +1,6 @@
-/*
+
 mod example1 {
-
     use types_macro::*;
-
     staking_payout_input!();
 
     #[test]
@@ -15,16 +13,29 @@ mod example1 {
         };
     }
 }
-*/
+
 mod example2 {
     macro_rules! make_struct {
-        ($x:ident, $( $visibality:vis $element: ident: $ty: ty),*) => {
-            #[derive(Debug)]
-            struct $x { $($visibality  $element: $ty),* }
+        (
+            $x:ident,
+            [$($visibality:vis $element:ident : $ty:ty),*],
+            [$($der:ident),*],
+            [$($key:ident : $val:expr),*]
+    ) => {
+            #[derive($($der),*)]
+            $(
+                #[$key = $val]
+            )*
+            struct $x { $($visibality  $element: $ty),*}
         }
     }
 
-    make_struct!(StakingPayoutInput, pub url: String, owner_key: String, pub address: String, era: u32);
+    make_struct!(
+            StakingPayoutInput,
+            [pub url: String, owner_key: String, pub address: String, era: u32],
+            [Default, Debug, Clone],
+            []// [authkey:"sdf23r23", insecure:"true"] 
+    );
 
     #[test]
     fn declarative_approach() {
@@ -35,10 +46,10 @@ mod example2 {
             era: 1,
         };
 
-        println!("{:?}", _spi.url);
+        println!("{:?}", _spi);
     }
 }
-/*
+
 mod example3 {
 
     // to convert literals into identifiers
@@ -70,6 +81,6 @@ mod example3 {
         };
     }
 }
-*/
+
 
 fn main() {}
