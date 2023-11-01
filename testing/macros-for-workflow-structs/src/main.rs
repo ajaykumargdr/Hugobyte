@@ -1,4 +1,3 @@
-
 mod example1 {
     use types_macro::*;
     staking_payout_input!();
@@ -15,10 +14,23 @@ mod example1 {
 }
 
 mod example2 {
-    macro_rules! make_struct {
+    use serde_json::Value;
+
+    macro_rules! make_input_struct {
         (
             $x:ident,
             [$($visibality:vis $element:ident : $ty:ty),*],
+            [$($der:ident),*]
+    ) => {
+            #[derive($($der),*)]
+            struct $x { $($visibality  $element: $ty),*}
+        }
+    }
+
+    macro_rules! make_main_struct {
+        (
+            $name:ident,
+            $input:ty,
             [$($der:ident),*],
             [$($key:ident : $val:expr),*]
     ) => {
@@ -26,20 +38,32 @@ mod example2 {
             $(
                 #[$key = $val]
             )*
-            struct $x { $($visibality  $element: $ty),*}
+            struct $name {
+                action_name: String,
+                pub input: $input,
+                pub output: Value,
+            }
         }
     }
 
-    make_struct!(
-            StakingPayoutInput,
+    #[cfg(test)]
+    make_input_struct!(
+            CartypeInput,
             [pub url: String, owner_key: String, pub address: String, era: u32],
-            [Default, Debug, Clone],
-            []// [authkey:"sdf23r23", insecure:"true"] 
+            [Default, Debug, Clone]
+    );
+
+    #[cfg(test)]#[test]
+    make_main_struct!(
+        Cartype,
+        CartypeInput,
+        [Debug, Clone],
+        []  // attributes
     );
 
     #[test]
     fn declarative_approach() {
-        let _spi = StakingPayoutInput {
+        let _spi = CartypeInput {
             url: "https://url".to_string(),
             owner_key: "ownerkey1234".to_string(),
             address: "address".to_string(),
@@ -81,6 +105,5 @@ mod example3 {
         };
     }
 }
-
 
 fn main() {}
