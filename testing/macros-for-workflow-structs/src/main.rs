@@ -15,6 +15,7 @@ mod example1 {
 
 mod example2 {
     use serde_json::Value;
+    use std::collections::HashMap;
 
     macro_rules! make_input_struct {
         (
@@ -51,7 +52,7 @@ mod example2 {
             CartypeInput,
             [pub url: String, owner_key: String, pub address: String, era: u32],
             [Default, Debug, Clone]
-    );
+    );  
 
     #[cfg(test)]#[test]
     make_main_struct!(
@@ -71,6 +72,16 @@ mod example2 {
         };
 
         println!("{:?}", _spi);
+
+        make_input_struct!(Employee_idsInput, [role:String], [Debug, Clone]);
+        make_main_struct!(Employee_ids, Employee_idsInput, [Debug, Clone], []);
+        make_input_struct!(SalaryInput, [details:HashMap<i32,(i32,String)>], [Debug, Clone]);
+        make_main_struct!(Salary, SalaryInput, [Debug, Clone], []);
+        make_input_struct!(GetaddressInput, [id:i32], [Debug, Clone]);
+        make_main_struct!(Getaddress, GetaddressInput, [Debug, Clone], []);
+        make_input_struct!(GetsalariesInput, [id:i32], [Debug, Clone]);
+        make_main_struct!(Getsalaries, GetsalariesInput, [Debug, Clone], []);
+        make_input_struct!(Input, [role:String], []);
     }
 }
 
