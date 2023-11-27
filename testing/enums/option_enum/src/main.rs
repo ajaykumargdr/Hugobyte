@@ -14,6 +14,13 @@ enum Option<T>{
     // another Option enum
 }
 
+#[derive(Debug)]
+enum Operation{
+    Normal,
+    Cat,
+    Map(String)
+}
+
 fn main() {
 
 // Standard
@@ -30,6 +37,14 @@ fn main() {
 
     // println!("{:?}", op1);
     println!("{:?}", op2);
+
+    println!("\n\n\n");
+
+    println!("{:?}", Operation::Normal);
+    println!("{:?}", Operation::Cat);
+    println!("{:?}", Operation::Map("field".into()));
+    
+    
 
     // let op3 = another(bool); // not works
     

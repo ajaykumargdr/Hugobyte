@@ -15,16 +15,15 @@ mod example1 {
 
 mod example2 {
     use serde_json::Value;
-    use std::collections::HashMap;
 
     macro_rules! make_input_struct {
         (
-            $x:ident,
+            $name:ident,
             [$($visibality:vis $element:ident : $ty:ty),*],
             [$($der:ident),*]
     ) => {
             #[derive($($der),*)]
-            struct $x { $($visibality  $element: $ty),*}
+            struct $name { $($visibality  $element: $ty),*}
         }
     }
 
@@ -47,20 +46,77 @@ mod example2 {
         }
     }
 
-    #[cfg(test)]
+    macro_rules! make_impl{
+        (
+            $name:ident,
+            $input:ident,
+            []
+        ) => {
+            impl $name{
+                pub fn new(action_name:String) -> Self{
+                    Self{
+                        action_name,
+                        input: $input{
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    }      
+                }
+            }
+        };
+        (
+            $name:ident,
+            $input:ident,
+            [$($element:ident : $ty:ty),*]
+    ) => {
+            impl $name{
+                pub fn new($( $element: $ty),*, action_name:String) -> Self{
+                    Self{
+                        action_name,
+                        input: $input{
+                            $($element),*,
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    }      
+                }
+            }
+        }
+        
+    }
+
+    macro_rules! impl_setter{
+        (
+            $name:ty,
+            [$($element:ident : $key:expr),*]
+        ) => {
+            impl $name{
+                pub fn setter(&mut self, val: Value) {
+                    $(
+                    let value = val.get($key).unwrap();
+                    self.input.$element = serde_json::from_value(value.clone()).unwrap();
+                    )*
+                }
+            }
+        }
+    }
+
     make_input_struct!(
-            CartypeInput,
-            [pub url: String, owner_key: String, pub address: String, era: u32],
-            [Default, Debug, Clone]
+        CartypeInput,
+        [url: String, owner_key: String, address: String, era: u32],
+        [Default, Debug, Clone]
     );  
 
-    #[cfg(test)]#[test]
     make_main_struct!(
         Cartype,
         CartypeInput,
-        [Debug, Clone],
+        [Default, Debug, Clone],
         []  // attributes
     );
+
+    // make_impl!(Cartype, CartypeInput,[]);
+    make_impl!(Cartype, CartypeInput,[address:String, era:u32]);
+    impl_setter!(Cartype, [url:"endpoint", owner_key:"auth_key"]);
 
     #[test]
     fn declarative_approach() {
@@ -71,17 +127,26 @@ mod example2 {
             era: 1,
         };
 
-        println!("{:?}", _spi);
+        let mut ct = Cartype::new("https://url".to_string(),1,"actionX".to_string());
+        
+        let str_ =r#"{"endpoint":"https://url","auth_key":"ownerkey1234"}"#;
+        let mut val:Value = serde_json::from_str(str_).unwrap();
 
-        make_input_struct!(Employee_idsInput, [role:String], [Debug, Clone]);
-        make_main_struct!(Employee_ids, Employee_idsInput, [Debug, Clone], []);
-        make_input_struct!(SalaryInput, [details:HashMap<i32,(i32,String)>], [Debug, Clone]);
-        make_main_struct!(Salary, SalaryInput, [Debug, Clone], []);
-        make_input_struct!(GetaddressInput, [id:i32], [Debug, Clone]);
-        make_main_struct!(Getaddress, GetaddressInput, [Debug, Clone], []);
-        make_input_struct!(GetsalariesInput, [id:i32], [Debug, Clone]);
-        make_main_struct!(Getsalaries, GetsalariesInput, [Debug, Clone], []);
-        make_input_struct!(Input, [role:String], []);
+        ct.setter(val);
+
+        eprintln!("{:#?}", ct);
+
+        // {
+        //     make_input_struct!(Employee_idsInput, [role:String], [Debug, Clone]);
+        //     make_main_struct!(Employee_ids, Employee_idsInput, [Debug, Clone], []);
+        //     make_input_struct!(SalaryInput, [details:HashMap<i32,(i32,String)>], [Debug, Clone]);
+        //     make_main_struct!(Salary, SalaryInput, [Debug, Clone], []);
+        //     make_input_struct!(GetaddressInput, [id:i32], [Debug, Clone]);
+        //     make_main_struct!(Getaddress, GetaddressInput, [Debug, Clone], []);
+        //     make_input_struct!(GetsalariesInput, [id:i32], [Debug, Clone]);
+        //     make_main_struct!(Getsalaries, GetsalariesInput, [Debug, Clone], []);
+        //     make_input_struct!(Input, [role:String], []);
+        // }
     }
 }
 
@@ -114,7 +179,12 @@ mod example3 {
             address: "address".to_string(),
             era: 1,
         };
+
     }
 }
 
-fn main() {}
+fn main() {
+
+    println!("{:?}", stringify!(sdf));
+
+}

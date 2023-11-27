@@ -1,0 +1,333 @@
+CC=/usr/bin/clang-11 AR=/usr/bin/llvm-ar-11
+export CC=/usr/bin/clang-11 && export AR=/usr/bin/llvm-ar-11
+
+ rustup default 1.72.0
+
+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
+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
+=======
+===============================================================
+teams:-
+	hugo@Teams8849
+paybooks
+	pay@Books9488
+peoplehum
+	people@hum9488	
+microsoft
+	micro@Soft9488
+Stork
+	hugo@Stork9488
+PostgreSQL
+	pgdb9488
+
+============================
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+
+
+[D]is it mandatory to write traits on binary lib files
+
+difference between assert! macro and assert_eq! macro 
+// if assert!(false) returns panic! 
+// assert_eq!(1, 1) -> pass || assert_eq!(1, 2) -> panic
+
+[D]// derivable traits
+   // https://doc.rust-lang.org/stable/book/appendix-03-derivable-traits.html
+
+[D] using Result<> in detailed
+[D] difference between Option<> and Result<>
+
+// Result<> structure
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+// Option<> structure
+enum Option<T>{
+    Some(T),
+    None
+}
+
+// buffering
+// serializing and deserializer
+// file system
+// halting problem in rust
+// 
+
+/// kpi options
+
+// icon blockchain
+// polkadot
+// more about smart contracts
+// ganache
+
+=============================================
+
+"Hugobyte Aurras Team <ajaykumarncas@gmail.com>"
+"smtp-relay.sendinblue.com"
+"xsmtpsib-8df2d37bc7693347432a01496722401d48c4189904558a0bd8d41ea5d9d167d5-SOXnqdVEysmWbr2R
+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
+
+sendgrid api -> 
+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	
+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
+
+
+git token
+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
+
+remove name input from forgot password action
+copy user.rs of login-otp to forgot-password
+change this line in change-password to inner block - > 
+            let doc: Topic = serde_json::from_value(res).unwrap();
+
+
+// balance-filter
+// balance-notification-registration
+// event-producer
+// event-receiver
+// event-registration
+// update-account-password
+// user-registration
+// user-login
+
+
+///////////////////
+
+__ow_method	// openwhisk method
+__ow_query	// openwhisk query
+db_name		// user data db
+db_url
+email_id
+otp
+new_password
+
+
+
+/*
+wsk -i action update forgot-password forgotPassword.zip --docker hugobyte/openwhisk-runtime-rust:latest --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP --timeout 300000 --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db" -a provide-api-key true --web true 
+
+wsk -i action invoke -r /guest/forgot-password -p email ajaykumarncas@gmail.com
+
+rm forgotPassword.zip && zip -r forgotPassword.zip src Cargo.toml 
+
+//// normal deploy 
+
+rm forgotPassword.zip && zip -r forgotPassword.zip src Cargo.toml && wsk -i action delete forgot-password && wsk -i action create forgot-password --kind rust:1.34 forgotPassword.zip --timeout 300000
+
+// wsk -i --apihost https://localhost:31001 action update forgot-password forgotPassword.zip --docker hugobyte/openwhisk-runtime-rust:latest --timeout 300000 --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db"
+
+*/ Note latest in doc image
+
+#########################
+wsk -i --apihost 139.84.145.253:31001 --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP action create forgot-password output.zip --docker hugobyte/openwhisk-runtime-rust:v0.3 --timeout 300000 --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db" --web true
+
+curl -X GET "https://139.84.145.253:31001/api/v1/web/guest/default/forgot-password.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"email":"ajaykumarncas@gmail.com"}' -k
+
+
+wsk -i action invoke -r forgot-password --param __ow_method get --param email "ajaykumaroffcl@gmail.com"
+
+
+curl -X GET -H "Content-Type: application/json" -d '{"email": "ajaykumarncas@gmail.com"}' \https://139.84.145.253:31001/api/v1/web/guest/default/forgot-password -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP"
+
+
+##################################################
+wsk -i --apihost 139.84.145.253:31001 --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP action update forgot-password output.zip --docker hugobyte/openwhisk-runtime-rust:v0.3 --timeout 300000 --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db" --param smtp_username "ajaykumarncas@gmail.com" --param smtp_password "xsmtpsib-8df2d37bc7693347432a01496722401d48c4189904558a0bd8d41ea5d9d167d5-SOXnqdVEysmWbr2R" --param smtp_relay "smtp-relay.sendinblue.com" --web true
+
+==============================================================================================================================================
+wsk -i --apihost 139.84.145.253:31001 --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP action update forgot-password output.zip --docker hugobyte/openwhisk-runtime-rust:v0.3 --timeout 300000 --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db" --param smtp_username "ajaykumarncas@gmail.com" --param smtp_password "xsmtpsib-8df2d37bc7693347432a01496722401d48c4189904558a0bd8d41ea5d9d167d5-SOXnqdVEysmWbr2R" --param smtp_relay "smtp-relay.sendinblue.com" --web true
+
+wsk -i action invoke -r forgot-password --param __ow_method get --param email "ajaykumaroffcl@gmail.com"
+
+wsk -i action invoke -r forgot-password --param __ow_method post --param email "ajaykumaroffcl@gmail.com" --param otp 224318 --param new_password "aurras9488"
+
+
+login with otp is not giving proper error when user is not exists
+
+##########################################################################################################################################################333333333333
+zip -r - Cargo.toml src  | docker run -e RELEASE=true -i --rm hugobyte/openwhisk-runtime-rust:v0.3 -compile main > forgotPassword.zip
+
+wsk -i --apihost 139.84.145.253:31001 --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP action update forgot-password forgotPassword.zip --docker hugobyte/openwhisk-runtime-rust:v0.3 --timeout 300000 --param db_url "http://admin:p@ssw0rd@172.17.0.1:5984" --param db_name "user_registration_db" --param mailing_api_key "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" --param mailing_api_url "https://api.sendgrid.com/v3/mail/send" --param mailing_from_id "ajaykumaroffcl@gmail.com" --web true
+
+curl -X POST "https://139.84.145.253:31001/api/v1/web/guest/default/user-registration.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"name":"ajaykumarm", "email":"ajaykumarncas@gmail.com", "password":"akm1aurras"}' -k
+
+curl -X POST "https://139.84.145.253:31001/api/v1/web/guest/default/user-login.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"email":"ajaykumarncas@gmail.com", "password":"akm1aurras"}' -k
+
+curl -X GET "https://139.84.145.253:31001/api/v1/web/guest/default/forgot-password.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"email":"ajaykumarncas@gmail.com"}' -k
+
+curl -X PUT "https://139.84.145.253:31001/api/v1/web/guest/default/forgot-password.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"email":"ajaykumarncas@gmail.com", "otp": 924665}' -k
+
+curl -X POST "https://139.84.145.253:31001/api/v1/web/guest/default/user-login.json?blocking=true&result=true" -H 'Content-Type: application/json' -u "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP" -d '{"email":"ajaykumarncas@gmail.com", "password":""}' -k
+
+####################################################################################################################################################
+
+
+tackle box will take the config.yaml file and parse it
+starlark will generate rust code
+
+config -> starlark -> rust code
+
+creating a DAG(Directed Asynchronus Graph) structure
+
+importing external libraries & is there anything like crates.io in starlark
+
+creating new cargo file from the starlark
+
+git actions
+
+notion doc that sid added
+
+airflow for DAG setup
+
+---------------------------------------------------------------------------------
+
+Create a POC plan, outlining the objectives and expected outcomes(AUR-112)
+
+Date: 30/10/2023
+Task Briefing for Today: Create a POC plan, outlining the objectives and expected outcomes(AUR-112)
+Accomplishments:Create a POC plan, outlining the objectives and expected outcomes(AUR-112)
+Challenges Faced:  NA
+Plan for Tomorrow: Implement the POC and document the results for evaluation(AUR-113)
+
+===================
+
+
+## Description
+### Commit Message
+```bash
+feat:
+```
+
+Please select the options that are relevant.
+
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [x] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [x] This change requires a documentation update
+
+## Checklist:
+
+- [x] Pull Request follow only a single responsibility.
+- [x] Code follows the style guidelines of this project
+- [x] Performed a self-review of my own code
+- [x] Commented my code, particularly in hard-to-understand areas
+- [ ] Made corresponding changes to the documentation
+- [x] Changes generate no new warnings
+- [ ] Added tests that prove fix is effective or the feature works
+- [x] New and existing unit tests pass locally with the changes
+- [ ] Any dependent changes have been merged and published in downstream modules
+- [x] Checked the code and corrected any misspellings
+
+//////////
+icon smart contracts
+
+use std::{io, path::Path};
+            // Command::new("cd /Users/shanithkk/Hugobyte/work/macos/workspace-aurras/internal-research-and-sample-code/temp/ &&
+
+CC=/opt/homebrew/opt/llvm/bin/clang 
+AR=/opt/homebrew/opt/llvm/bin/llvm-ar cargo build --release --target wasm32-wasi ").status().unwrap();
+
+=======================
+
+Date: 23/11/2023
+ 
+Task Briefing for Today: Perform integration test for composer V2 (AUR-150)-[InProgress]
+ 
+Accomplishments: -
+ 
+Challenges Faced: Errors in testing the generated wasm file
+ 
+Plan for Tomorrow: Perform integration test for composer V2 (AUR-150)-[InProgress]
+
+==================================================================================
+
+//working
+#[allow(dead_code, unused)]
+pub fn main(args: Value) -> Result<Value, String> {
+    const LIMIT: usize = 4;
+    let mut workflow = WorkflowGraph::new(LIMIT);
+    let input: Input = serde_json::from_value(args).map_err(|e| e.to_string())?;
+
+    let cartype = Cartype::new(input.car_type, String::from("cartype"));
+    let cartype_index = workflow.add_node(Box::new(cartype));
+
+    let modelavail = Modelavail::new(input.company_name, String::from("modelavail"));
+    let modelavail_index = workflow.add_node(Box::new(modelavail));
+
+    let modelsprice = Modelsprice::new(String::from("modelsprice"));
+    let modelsprice_index = workflow.add_node(Box::new(modelsprice));
+
+    let purchase = Purchase::new(input.model_name, input.price, String::from("purchase"));
+    let purchase_index = workflow.add_node(Box::new(purchase));
+
+    workflow.add_edges(&[
+        (cartype_index, modelavail_index),
+        (modelavail_index, modelsprice_index),
+        (modelsprice_index, purchase_index),
+    ]);
+
+    let result = workflow
+        .init()?
+        .pipe(modelavail_index)?
+        .pipe(modelsprice_index)?
+        .term(Some(purchase_index))?;
+
+    let result = serde_json::to_value(result).unwrap();
+    Ok(result)
+}
+
+// not working 
+
+#[allow(dead_code, unused)]
+pub fn main(args: Value) -> Result<Value, String> {
+    const LIMIT: usize = 4;
+    let mut workflow = WorkflowGraph::new(LIMIT);
+    let input: Input = serde_json::from_value(args).map_err(|e| e.to_string())?;
+
+	let cartype = Cartype::new(input.car_type, "cartype".to_string());
+	let cartype_index = workflow.add_node(Box::new(cartype));
+
+	let modelsprice = Modelsprice::new("modelsprice".to_string());
+	let modelsprice_index = workflow.add_node(Box::new(modelsprice));
+	
+    let modelavail = Modelavail::new(input.company_name, "modelavail".to_string());
+	let modelavail_index = workflow.add_node(Box::new(modelavail));
+	let purchase = Purchase::new(input.model_name,input.price, "purchase".to_string());
+	let purchase_index = workflow.add_node(Box::new(purchase));
+
+	workflow.add_edges(&[
+		(cartype_index, modelavail_index),
+		(modelavail_index, modelsprice_index),
+		(modelsprice_index, purchase_index),
+	]);
+
+	let result = workflow
+		.init()?
+		.pipe(modelavail_index)?
+		.pipe(modelsprice_index)?
+		.term(Some(purchase_index))?;
+
+    let result = serde_json::to_value(result).unwrap();
+    Ok(result)
+}
+
+

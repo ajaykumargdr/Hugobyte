@@ -162,38 +162,3 @@ pub struct Input {
     pub model_name: String,
     pub price: i32,
 }
-
-#[allow(dead_code, unused)]
-pub fn main(args: Value) -> Result<Value, String> {
-    const LIMIT: usize = 4;
-    let mut workflow = WorkflowGraph::new(LIMIT);
-    let input: Input = serde_json::from_value(args).map_err(|e| e.to_string())?;
-
-    let cartype = Cartype::new(input.car_type, String::from("cartype"));
-
-    let modelavail = Modelavail::new(input.company_name, String::from("modelavail"));
-
-    let modelsprice = Modelsprice::new(String::from("modelsprice"));
-
-    let purchase = Purchase::new(input.model_name, input.price, String::from("purchase"));
-
-    let cartype_index = workflow.add_node(Box::new(cartype));
-    let modelavail_index = workflow.add_node(Box::new(modelavail));
-    let modelsprice_index = workflow.add_node(Box::new(modelsprice));
-    let purchase_index = workflow.add_node(Box::new(purchase));
-
-    workflow.add_edges(&[
-        (cartype_index, modelavail_index),
-        (modelavail_index, modelsprice_index),
-        (modelsprice_index, purchase_index),
-    ]);
-
-    let result = workflow
-        .init()?
-        .pipe(modelavail_index)?
-        .pipe(modelsprice_index)?
-        .term(Some(purchase_index))?;
-
-    let result = serde_json::to_value(result).unwrap();
-    Ok(result)
-}
